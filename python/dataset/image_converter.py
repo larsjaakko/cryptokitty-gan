@@ -1,20 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#from cairosvg import svg2png
-from pathlib import Path
+from pathlib import Path, PurePath, PosixPath
 import os
 
-from wand.api import library
-import wand.color
-from wand.image import Image
+import subprocess
 
 raw_folder = Path.cwd() / 'data/raw'
 out_folder = Path.cwd() / 'data/processed_png'
 
 def get_filelist():
 
-    files = os.listdir(str(raw_folder))
+    files = sorted(raw_folder.glob('*.svg'))
 
     return files
 
@@ -22,30 +19,20 @@ def convert_to_png(files):
 
     for i, file in enumerate(files):
 
-        if Path(file).suffix == '.svg':
+        file = PurePath(file)
 
+        input = str(file)
+        output = str(out_folder / file.stem) + '.png'
 
-            input = str(raw_folder / file)
-            output = str(out_folder / file.replace('.svg', '.png'))
+        inkscape_string = 'inkscape -z {} -e {} -w 256 -b "#ffffff"'.format(input, output)
 
-            with Image(filename=input, format='svg', height=256, width=256) as image:
+        try:
 
-                #image.sample(256, 256)
-                image.format = 'jpeg'
-                image.save(filename=output)
-               # with wand.color.Color('transparent') as background_color:
-               #     library.MagickSetBackgroundColor(image.wand,
-               #                          background_color.resource)
-               #
-               #
-               # image.read(blob=input.read(), format="svg")
-               # png_image = image.make_blob("png32")
+            subprocess.run(inkscape_string, shell=True, check=True)
 
-            # with open(output_filename, "wb") as out:
-            #    out.write(png_image)
+        except e:
 
-        else:
-           continue
+            print("Skipped {} for some error: {}".format(input, e))
 
 
 def resize():
