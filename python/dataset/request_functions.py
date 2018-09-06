@@ -31,7 +31,7 @@ def fetch_file(url, id):
     with open(str(path), 'wb') as out_file:
         shutil.copyfileobj(r.raw, out_file)
 
-    del r
+    return path
 
 def cooldown():
 
