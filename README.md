@@ -5,6 +5,6 @@ Used Anaconda, so requirements file will be an ungodly mess.
 
 ## Dataset
 
-Dataset is created by calling the open Cryptokitties API. Images are served as .svg files, which are then converted to .png files using Inkscape's command line tool. Cairosvg and ImageMagick + wand fail to read and/or convert the .svg files properly. Inkscape, although a clunky behemoth compared to a simple python library, does the task admirably well.
+Dataset is created by calling the open Cryptokitties API. Images are served as .svg files, which are then converted to .png files using Inkscape's command line tool. Cairosvg and ImageMagick/wand fail to read and/or convert the .svg files properly. Inkscape, although a clunky behemoth compared to a simple python library, does the task more consistently. Still, many artifacts and smaller errors to the kitties are introduced in the conversion process. This should not impact the overall project, however.
 
 Images are resized down to 256 x 256, with a white background.
