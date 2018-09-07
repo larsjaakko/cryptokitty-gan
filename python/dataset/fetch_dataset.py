@@ -107,6 +107,9 @@ def main():
     p = Pool(4)
     p.map(worker, download_list)
 
+    p.join()
+    p.close()
+
 
 if __name__ == "__main__":
     main()
