@@ -115,10 +115,14 @@ def main():
 
     download_list = get_download_list()
     remaining = len(download_list)
+    downloaded = dataset_size - remaining
 
     with Pool(4) as p:
 
-        r = list(tqdm(p.imap(worker, download_list), total=remaining))
+        r = list(tqdm(p.imap(worker, download_list),
+                        total=remaining,
+                        initial=downloaded
+                        ))
 
     p.close()
     p.join()
