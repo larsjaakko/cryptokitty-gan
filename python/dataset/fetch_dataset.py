@@ -118,7 +118,7 @@ def main():
 
     with Pool(4) as p:
 
-
+        r = list(tqdm(p.imap(worker, download_list), total=remaining))
 
     p.close()
     p.join()
