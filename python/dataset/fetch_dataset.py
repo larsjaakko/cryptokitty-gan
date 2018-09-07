@@ -114,13 +114,12 @@ def convert(filestr):
 def main():
 
     download_list = get_download_list()
-    remaining = len(download_list)
-    downloaded = dataset_size - remaining
+    downloaded = dataset_size - len(download_list)
 
     with Pool(4) as p:
 
         r = list(tqdm(p.imap(worker, download_list),
-                        total=remaining,
+                        total=dataset_size,
                         initial=downloaded
                         ))
 
