@@ -15,7 +15,7 @@ def get_url(id):
     r = requests.get(url)
 
     blob = r.json()
-    img_url = blob.get('image_url')
+    img_url = blob.get('image_url_cdn')
 
     return img_url
 

@@ -3,6 +3,7 @@ import numpy as np
 import requests
 import json
 import time
+from tqdm import tqdm
 
 from multiprocessing import Process, Queue, Pool
 
@@ -14,11 +15,11 @@ import subprocess
 raw_folder = Path.cwd() / 'data/raw'
 out_folder = Path.cwd() / 'data/processed_png'
 
-dataset_size = 500000
+dataset_size = 150000
 
 def get_download_list():
 
-    print("Generating download list...")
+    #tqdm.write("Generating download list...")
 
     existing = sorted(out_folder.glob('*.png'))
     existing_ids = []
@@ -31,6 +32,8 @@ def get_download_list():
 
     existing_ids = np.array(existing_ids, dtype=int)
     downloaded = len(existing_ids)
+
+    #tqdm.write("Already downloaded {} kitties.".format(downloaded))
 
     id_pool = np.arange(1, 900000)
     id_pool = np.setdiff1d(id_pool, existing_ids)
@@ -49,19 +52,22 @@ def worker(file_id):
     using a queue object between a downloader and a converter functions
     """
 
-    print('Fetching kitty #{}'.format(file_id))
+    #tqdm.write('Fetching kitty #{}'.format(file_id))
 
     try:
         url = rf.get_url(file_id)
         file = rf.fetch_file(url, file_id)
 
-    except (requests.exceptions.RequestException, json.decoder.JSONDecodeError) as e:
-        print(e)
-    except Exception as e:
-        print(e.__doc__)
-        print(e.message)
+        conv_return = convert(file)
+        return conv_return
 
-    convert(file)
+    except (requests.exceptions.RequestException, json.decoder.JSONDecodeError) as e:
+        #tqdm.write(e)
+        pass
+    except Exception as e:
+        #tqdm.write(e.__doc__)
+        #tqdm.write(e.message)
+        pass
 
 
 def convert(filestr):
@@ -75,13 +81,15 @@ def convert(filestr):
         path = Path(file)
 
     except Exception as e:
-        print(e)
-        print("Sleeping for a bit before retrying the conversion process..")
+        #tqdm.write(e)
+        #tqdm.write("Sleeping for a bit before retrying the conversion process..")
         time.sleep(10)
 
     if file.suffix == '.png':
-        print('Kitty #{} was a .png! Deleting this troll kitten.'.format(file.stem))
+        #tqdm.write('Kitty #{} was a .png! Deleting this troll kitten.'.format(file.stem))
         path.unlink()
+
+        return 0
 
     input = filestr
     output = str(out_folder / file.stem) + '.png'
@@ -92,23 +100,30 @@ def convert(filestr):
 
         try:
             subprocess.run(inkscape_string, shell=True, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-            print('Converted kitty #{}!'.format(file.stem))
+            #tqdm.write('Converted kitty #{}!'.format(file.stem))
 
         except Exception as e:
-            print("Skipped conversion of kitty #{} for some error: {}".format(file.stem, e.__doc__))
+            pass
+            #tqdm.write("Skipped conversion of kitty #{} for some error: {}".format(file.stem, e.__doc__))
 
-    path.unlink()
+        path.unlink()
+
+        return 1
 
 
 def main():
 
     download_list = get_download_list()
+    remaining = dataset_size-len(download_list)
 
-    p = Pool(4)
-    p.map(worker, download_list)
+    with Pool(5) as p:
 
-    p.join()
+        r = list(tqdm(p.imap(worker, download_list), total=remaining))
+
+    #p.map(worker, download_list)
+
     p.close()
+    p.join()
 
 
 if __name__ == "__main__":
