@@ -19,7 +19,7 @@ dataset_size = 150000
 
 def get_download_list():
 
-    #tqdm.write("Generating download list...")
+    tqdm.write("Generating download list...")
 
     existing = sorted(out_folder.glob('*.png'))
     existing_ids = []
@@ -33,7 +33,7 @@ def get_download_list():
     existing_ids = np.array(existing_ids, dtype=int)
     downloaded = len(existing_ids)
 
-    #tqdm.write("Already downloaded {} kitties.".format(downloaded))
+    tqdm.write("Already downloaded {} kitties! We'll get the rest now.\n\n".format(downloaded))
 
     id_pool = np.arange(1, 900000)
     id_pool = np.setdiff1d(id_pool, existing_ids)
@@ -114,13 +114,11 @@ def convert(filestr):
 def main():
 
     download_list = get_download_list()
-    remaining = dataset_size-len(download_list)
+    remaining = len(download_list)
 
-    with Pool(5) as p:
+    with Pool(4) as p:
 
-        r = list(tqdm(p.imap(worker, download_list), total=remaining))
 
-    #p.map(worker, download_list)
 
     p.close()
     p.join()
