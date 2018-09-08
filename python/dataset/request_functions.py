@@ -4,11 +4,16 @@
 import requests
 import shutil
 from pathlib import Path
-from urllib.parse import urlparse
+
 import os
 import time
 
-def get_url(id):
+def get_url(id, format=None):
+
+    """
+    Takes a kitty ID as argument, and parses the json blob to return the
+    url to the .svg file.
+    """
 
     url = 'http://api.cryptokitties.co/kitties/' + str(id)
 
@@ -17,10 +22,17 @@ def get_url(id):
     blob = r.json()
     img_url = blob.get('image_url_cdn')
 
+    if format:
+        img_url = img_url.replace('.svg', format)
+
     return img_url
 
 
 def fetch_file(url, id):
+    """
+    Takes a kitty ID and its .svg url as arguments. Downloads the file and
+    returns the file path for further processing.
+    """
 
     data_folder = Path.cwd() / 'data/raw'
     filename = os.path.basename(url)

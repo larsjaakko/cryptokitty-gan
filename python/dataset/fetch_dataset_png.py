@@ -7,6 +7,8 @@ from pathlib import Path, PurePath, PosixPath
 import os
 import subprocess
 
+from PIL import Image
+
 import request_functions as rf
 import numpy as np
 
@@ -15,6 +17,7 @@ raw_folder = Path.cwd() / 'data/raw'
 out_folder = Path.cwd() / 'data/processed_png'
 
 dataset_size = 150000
+image_size = (256, 256)
 
 def get_download_list():
 
@@ -54,7 +57,7 @@ def worker(file_id):
     #tqdm.write('Fetching kitty #{}'.format(file_id))
 
     try:
-        url = rf.get_url(file_id)
+        url = rf.get_url(file_id, ".png")
         file = rf.fetch_file(url, file_id)
 
         conv_return = convert(file)
@@ -72,7 +75,7 @@ def worker(file_id):
 def convert(filestr):
 
     """
-    Converts the given path to png.
+    Converts the given path to the proper size png.
     """
 
     try:
@@ -84,30 +87,25 @@ def convert(filestr):
         #tqdm.write("Sleeping for a bit before retrying the conversion process..")
         time.sleep(10)
 
-    if file.suffix == '.png':
-        #tqdm.write('Kitty #{} was a .png! Deleting this troll kitten.'.format(file.stem))
-        path.unlink()
-
-        return 0
-
-    input = filestr
     output = str(out_folder / file.stem) + '.png'
 
-    inkscape_string = 'inkscape -z {} -e {} -w 256 -b "#ffffff"'.format(input, output)
+    try:
 
-    if file.suffix == '.svg':
+        image = Image.open(path)
 
-        try:
-            subprocess.run(inkscape_string, shell=True, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-            #tqdm.write('Converted kitty #{}!'.format(file.stem))
+        background = Image.new('RGBA', image_size, color='white')
+        resized = image.resize(image_size, resample=Image.LANCZOS)
+        composite = Image.alpha_composite(background, resized)
 
-        except Exception as e:
-            pass
-            #tqdm.write("Skipped conversion of kitty #{} for some error: {}".format(file.stem, e.__doc__))
+        composite.save(output)
 
         path.unlink()
-
         return 1
+
+    except Exception as e:
+        print(e)
+        path.unlink()
+        return 0
 
 
 def main():
