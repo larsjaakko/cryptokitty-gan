@@ -7,13 +7,13 @@ Dataset is created by calling the open Cryptokitties API. Images are downloaded 
 
 ## GAN architecture
 
-The employed neural network is a Tensorflow implementation of the model proposed in [Berthelot, Schumm and Metz, 2017.](#references).* The exact implementation used is one by [Arthur Goldberg ](https://github.com/artcg/BEGAN).
+The employed neural network is a Tensorflow implementation of the model proposed in [Berthelot, Schumm and Metz, 2017.](#references). The exact implementation used is one by [Arthur Goldberg ](https://github.com/artcg/BEGAN).
 
 ## Requirements
 
 ### Building the dataset
 * Python 3.6+
-* Pillow 
+* Pillow
 * Requests
 * tqdm
 * Numpy.
