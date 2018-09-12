@@ -5,7 +5,7 @@ import requests
 import shutil
 from pathlib import Path
 
-import os
+import os, urlparse
 import time
 
 def get_url(id, format=None):
@@ -21,6 +21,12 @@ def get_url(id, format=None):
 
     blob = r.json()
     img_url = blob.get('image_url_cdn')
+
+    path = urlparse.urlparse(url).path
+    ext = os.path.splitext(path)[1]
+
+    if ext == '.png':
+        raise ValueError('This is one of them special kitties. Try the next one')
 
     if format:
         img_url = img_url.replace('.svg', format)

@@ -1,0 +1,13 @@
+floyd run --gpu --env tensorflow-1.5 \
+--data  larsjaakko/datasets/cryptokitties-h5/1:data \
+"python python/tensorflow/main.py --start-epoch=0 --add-epochs=100 --save-every 5 --image-size 128"
+
+floyd run --gpu2 --env tensorflow-1.9 \
+--data  larsjaakko/datasets/cryptokitties-h5/1:data \
+"python python/tensorflow/main.py --start-epoch=0 --add-epochs=10 --save-every 1 --image-size 128"
+
+python python/tensorflow/main.py --start-epoch=0 --add-epochs=10 --train=0 --image-size 128
+
+floyd run --gpu2 --env tensorflow-1.5 \
+--data  larsjaakko/datasets/cryptokitties-h5/1:data \
+"bash run.sh"

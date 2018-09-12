@@ -94,6 +94,7 @@ def convert(filestr):
         image = Image.open(path)
 
         background = Image.new('RGBA', image_size, color='white')
+        background = background.crop((461, 181, 1917, 1637))
         resized = image.resize(image_size, resample=Image.LANCZOS)
         composite = Image.alpha_composite(background, resized)
 
