@@ -17,7 +17,7 @@ raw_folder = Path.cwd() / 'data/raw'
 out_folder = Path.cwd() / 'data/processed_png'
 
 dataset_size = 150000
-image_size = (256, 256)
+image_size = (128, 128)
 
 def get_download_list():
 
@@ -53,8 +53,6 @@ def worker(file_id):
     faster (and way simpler) to run the end-to-end process in parallell than
     using a queue object between a downloader and a converter functions
     """
-
-    #tqdm.write('Fetching kitty #{}'.format(file_id))
 
     try:
         url = rf.get_url(file_id, ".png")
@@ -92,9 +90,10 @@ def convert(filestr):
     try:
 
         image = Image.open(path)
+        image = image.crop((461, 181, 1917, 1637))
 
         background = Image.new('RGBA', image_size, color='white')
-        background = background.crop((461, 181, 1917, 1637))
+
         resized = image.resize(image_size, resample=Image.LANCZOS)
         composite = Image.alpha_composite(background, resized)
 
@@ -114,7 +113,7 @@ def main():
     download_list = get_download_list()
     downloaded = dataset_size - len(download_list)
 
-    with Pool(6) as p:
+    with Pool(8) as p:
 
         r = list(tqdm(p.imap(worker, download_list),
                         total=dataset_size,
