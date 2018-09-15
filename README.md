@@ -3,12 +3,12 @@ Attempt at using Cryptokitties to train a GAN.
 
 ## Dataset
 
-Dataset is created by calling the open Cryptokitties API. Images are downloaded as .png files, resized down to 256x256 with Pillow and given a white background.
-The raw dataset of 150,000 cryptokitties scaled to 256x256 can be downloaded [here](https://www.dropbox.com/s/egq2q51gaj1rzjq/cryptokitties_256_png.zip?dl=0).
+Dataset is created by calling the open Cryptokitties API. Images are downloaded as .png files, cropped, given a white background and resized down to 128x128 using Pillow.
+The raw dataset of 150,000 cryptokitties scaled to 128x128 can be downloaded [here](https://www.dropbox.com/s/egq2q51gaj1rzjq/cryptokitties_256_png.zip?dl=0).
 
 ## GAN architecture
 
-The employed neural network is a Tensorflow implementation of the model proposed in [Berthelot, Schumm and Metz, 2017](#references). The exact implementation used is one by [Arthur Goldberg ](https://github.com/artcg/BEGAN).
+The employed neural network is a Tensorflow implementation of the model proposed in [Berthelot, Schumm and Metz, 2017](#references). The exact implementation used is one by [Taehoon Kim](https://github.com/carpedm20/BEGAN-tensorflow).
 
 ## Requirements
 
@@ -17,10 +17,10 @@ The employed neural network is a Tensorflow implementation of the model proposed
 * Pillow
 * Requests
 * tqdm
-* Numpy.
+* Numpy
 
 ### Tensorflow model
-Refer to the [original implementation by Arthur Goldberg ](https://github.com/artcg/BEGAN).
+Refer to the [original implementation by Taehoon Kim](https://github.com/carpedm20/BEGAN-tensorflow).
 
 ## References
 

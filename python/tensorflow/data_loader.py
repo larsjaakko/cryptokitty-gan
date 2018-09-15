@@ -5,8 +5,11 @@ import tensorflow as tf
 
 def get_loader(root, batch_size, scale_size, data_format, split=None, is_grayscale=False, seed=None):
     dataset_name = os.path.basename(root)
+
     if dataset_name in ['CelebA'] and split:
         root = os.path.join(root, 'splits', split)
+
+    print("Root is {}".format(root))
 
     for ext in ["jpg", "png"]:
         paths = glob("{}/*.{}".format(root, ext))
@@ -15,7 +18,7 @@ def get_loader(root, batch_size, scale_size, data_format, split=None, is_graysca
             tf_decode = tf.image.decode_jpeg
         elif ext == "png":
             tf_decode = tf.image.decode_png
-        
+
         if len(paths) != 0:
             break
 

@@ -153,8 +153,13 @@ class Trainer(object):
                 d_loss = result['d_loss']
                 k_t = result['k_t']
 
-                print("[{}/{}] Loss_D: {:.6f} Loss_G: {:.6f} measure: {:.4f}, k_t: {:.4f}". \
-                      format(step, self.max_step, d_loss, g_loss, measure, k_t))
+                #print("[{}/{}] Loss_D: {:.6f} Loss_G: {:.6f} measure: {:.4f}, k_t: {:.4f}". \
+                #      format(step, self.max_step, d_loss, g_loss, measure, k_t))
+
+                print('{"metric": "Loss_D", "value": {}}'.format(d_loss))
+                print('{"metric": "Loss_G", "value": {}}'.format(g_loss))
+                print('{"metric": "Loss_measure", "value": {}}'.format(measure))
+                print('{"metric": "k_t", "value": {}}'.format(k_t))
 
             if step % (self.log_step * 10) == 0:
                 x_fake = self.generate(z_fixed, self.model_dir, idx=step)
