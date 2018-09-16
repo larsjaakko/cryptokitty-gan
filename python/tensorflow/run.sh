@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Creating directory for data
-#mkdir /data
+mkdir /floyd/home/data
 
 # Creating symlink so BEGAN code can access dataset
 ln -s /floyd/input/cryptokitties /floyd/home/data
 
 # Running job
 
-python main.py --dataset=cryptokitties --use_gpu=True
+python main.py --dataset=cryptokitties --d_lr=0.00004 --g_lr=0.00004 --max_step=100000 --use_gpu=True
