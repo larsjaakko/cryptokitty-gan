@@ -1,5 +1,5 @@
 # cryptokitty-gan
-Attempt at using Cryptokitties to train a GAN.
+Using Cryptokitties to train a GAN.
 
 ## Dataset
 
@@ -8,7 +8,8 @@ The raw dataset of 150,000 cryptokitties scaled to 128x128 can be downloaded [he
 
 ## GAN architecture
 
-The employed neural network is a Tensorflow implementation of the model proposed in [Berthelot, Schumm and Metz, 2017](#references). The exact implementation used is one by [Taehoon Kim](https://github.com/carpedm20/BEGAN-tensorflow).
+The employed neural network is a Tensorflow implementation of the model proposed in [Berthelot, Schumm and Metz, 2017](#references). The exact implementation used is one by [Taehoon Kim](https://github.com/carpedm20/BEGAN-tensorflow). Minor modifications were made to the original code to be more compatible with Floydhub — e.g. outputting loss metrics with JSON formatting.
+
 
 ## Requirements
 
@@ -21,7 +22,6 @@ The employed neural network is a Tensorflow implementation of the model proposed
 
 ### Tensorflow model
 Refer to the [original implementation by Taehoon Kim](https://github.com/carpedm20/BEGAN-tensorflow).
-
 ## References
 
 * [Berthelot, Schumm and Metz. BEGAN: Boundary Equilibrium Generative Adversarial Networks. arXiv preprint, 2017](https://arxiv.org/abs/1703.10717)
