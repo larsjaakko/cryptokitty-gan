@@ -9,10 +9,25 @@ floyd run --gpu2 --env tensorflow-1.9 \
 python python/tensorflow/main.py --start-epoch=0 --add-epochs=10 --train=0 --image-size 128
 
 
-floyd run --gpu2 --env tensorflow-1.4 --data  larsjaakko/datasets/cryptokitties-rand-128/1:cryptokitties "bash run.sh"
+floyd run --gpu2 --env tensorflow-1.4 --tensorboard --data  larsjaakko/datasets/cryptokitties-rand-128/1:cryptokitties "bash run.sh"
 floyd run --gpu --env tensorflow-1.4 --data  larsjaakko/datasets/cryptokitties-rand-128/1:cryptokitties "bash run.sh"
 
 floyd run --gpu --env tensorflow-1.4 \
---data  larsjaakko/datasets/cryptokitties-128/2:cryptokitties \
---data  larsjaakko/datasets/cryptokitties-42-logs/3:logs \
+--data  larsjaakko/datasets/cryptokitties-rand-128/1:cryptokitties \
+--data  larsjaakko/datasets/cryptokitties-76-logs/2:logs \
  "bash run_samples.sh"
+
+ floyd run --cpu --env tensorflow-1.4 \
+ --data  larsjaakko/datasets/cryptokitties-rand-128/1:cryptokitties \
+ --data  larsjaakko/datasets/cryptokitties-76-logs/2:logs \
+  "bash run_samples.sh"
+
+floyd run --gpu --env tensorflow-1.4 \
+--data  larsjaakko/datasets/cryptokitties-rand-128/1:cryptokitties \
+--data  larsjaakko/datasets/cryptokitty-test/1:cryptokitties-test \
+ "bash run_samples.sh"
+
+ floyd run --gpu2 --env tensorflow-1.4 --tensorboard\
+ --data  larsjaakko/datasets/cryptokitties-rand-128/1:cryptokitties \
+ --data  larsjaakko/datasets/cryptokitty-test/1:cryptokitties-test \
+  "bash run.sh"

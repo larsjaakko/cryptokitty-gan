@@ -18,7 +18,7 @@ net_arg.add_argument('--input_scale_size', type=int, default=64,
                      help='input image will be resized with the given value as width and height')
 net_arg.add_argument('--conv_hidden_num', type=int, default=128,
                      choices=[64, 128],help='n in the paper')
-net_arg.add_argument('--z_num', type=int, default=64, choices=[64, 128])
+net_arg.add_argument('--z_num', type=int, default=64, choices=[64, 128, 256])
 
 # Data
 data_arg = add_argument_group('Data')
@@ -50,7 +50,7 @@ misc_arg.add_argument('--log_step', type=int, default=50)
 misc_arg.add_argument('--save_step', type=int, default=5000)
 misc_arg.add_argument('--num_log_samples', type=int, default=3)
 misc_arg.add_argument('--log_level', type=str, default='INFO', choices=['INFO', 'DEBUG', 'WARN'])
-misc_arg.add_argument('--log_dir', type=str, default='data/logs')
+misc_arg.add_argument('--log_dir', type=str, default='logs/')
 misc_arg.add_argument('--data_dir', type=str, default='data')
 misc_arg.add_argument('--test_data_path', type=str, default=None,
                       help='directory with images which will be used in test sample generation')

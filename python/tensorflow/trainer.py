@@ -243,7 +243,7 @@ class Trainer(object):
                 self.z_r, self.conv_hidden_num, self.channel, self.repeat_num, self.data_format, reuse=True)
 
         with tf.variable_scope("test") as vs:
-            self.z_r_loss = tf.reduce_mean(tf.abs(self.x - G_z_r))
+            self.z_r_loss = tf.reduce_mean(tf.abs(norm_img(self.x) - G_z_r))
             self.z_r_optim = z_optimizer.minimize(self.z_r_loss, var_list=[self.z_r])
 
         test_variables = tf.contrib.framework.get_variables(vs)
@@ -326,6 +326,8 @@ class Trainer(object):
     def test(self):
         root_path = "./"#self.model_dir
 
+        print('root_path: {}'.format(root_path))
+
         all_G_z = None
         for step in range(3):
             real1_batch = self.get_image_from_loader()
@@ -357,4 +359,5 @@ class Trainer(object):
         x = self.data_loader.eval(session=self.sess)
         if self.data_format == 'NCHW':
             x = x.transpose([0, 2, 3, 1])
+        print(len(np.where( x < 255 )))
         return x

@@ -24,6 +24,7 @@ def main(config):
             data_path = config.test_data_path
         batch_size = config.sample_per_image
         do_shuffle = False
+        print('data_path: {}'.format(data_path))
 
     data_loader = get_loader(
             data_path, config.batch_size, config.input_scale_size,
