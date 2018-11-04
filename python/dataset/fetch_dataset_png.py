@@ -35,7 +35,7 @@ def get_download_list():
 
     tqdm.write("Already downloaded {} kitties! We'll get the rest now.\n\n".format(downloaded))
 
-    id_pool = np.arange(100000, 1100000)
+    id_pool = np.arange(500000, 1100000)
     id_pool = np.setdiff1d(id_pool, existing_ids)
     dl_list = np.random.choice(id_pool,
                                 size=dataset_size-downloaded,
