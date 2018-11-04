@@ -6,7 +6,7 @@ mkdir -p /floyd/home/logs
 
 # Creating symlink so BEGAN code can access dataset
 ln -s /floyd/input/cryptokitties /floyd/home/data
-! cp -R /floyd/input/cryptokitties-test logs/cryptokitties_test
+#! cp -R /floyd/input/cryptokitties-test logs/cryptokitties_test
 
 # Running job
 
@@ -50,4 +50,16 @@ ln -s /floyd/input/cryptokitties /floyd/home/data
 #python main.py --dataset=cryptokitties --d_lr=0.00006 --g_lr=0.00006 --lr_lower_boundary=0.00001 --conv_hidden_num=64 --max_step=30000 --use_gpu=True --gamma=0.7 --input_scale_size=128
 #83
 #python main.py --dataset=cryptokitties --d_lr=0.00003 --lr_lower_boundary=0.00001 --z_num=256 --max_step=250000 --use_gpu=True --gamma=0.7
-python main.py --dataset=cryptokitties --load_path=cryptokitties_test --d_lr=0.000015 --g_lr=0.00006 --lr_lower_boundary=0.00001 --z_num=256 --max_step=250000 --use_gpu=True --gamma=0.7
+#python main.py --dataset=cryptokitties --load_path=cryptokitties_test --d_lr=0.000015 --g_lr=0.00006 --lr_lower_boundary=0.00001 --z_num=256 --max_step=250000 --use_gpu=True --gamma=0.7
+#111
+#python main.py --dataset=cryptokitties --d_lr=0.00004 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=100000 --use_gpu=True --gamma=0.9
+#112
+#python main.py --dataset=cryptokitties --d_lr=0.00004 --g_lr=0.00008 --conv_hidden_num=64 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True --gamma=0.9
+#113
+#python main.py --dataset=cryptokitties --d_lr=0.00002 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True --gamma=0.9
+#114
+#python main.py --dataset=cryptokitties --d_lr=0.00008 --g_lr=0.00002 --lr_lower_boundary=0.00001 --max_step=50000 --use_gpu=True
+#115
+#python main.py --dataset=cryptokitties --d_lr=0.00006 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --gamma=0.9 --use_gpu=True
+#116
+python main.py --dataset=cryptokitties --d_lr=0.00001 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=10000 --gamma=0.9 --use_gpu=True 

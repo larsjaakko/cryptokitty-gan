@@ -88,7 +88,7 @@ def convert(filestr):
         image = Image.open(path)
 
         # Select random number of pixels to add to the minimum bounds for cropping
-        pixels = np.random.choice(np.arange(1,250))
+        pixels = np.random.choice(np.arange(1,300))
         # The right bound only has around 83 pixels of space
         # from the inner bound, so setting that value first
         # Inner bound has coordinates 461, 181, 1917, 1637
@@ -97,10 +97,29 @@ def convert(filestr):
         left = right - (1456 + pixels)
         upper = 181 - np.random.choice(np.arange(np.min([pixels, 182])))
         lower = upper + (1456 + pixels)
-        rotation = np.random.normal(loc=0, scale=3)
+        rotation = np.random.normal(loc=0, scale=3.5)
 
         image = image.crop((left, upper, right, lower))
-        background = Image.new('RGBA', image_size, color='white')
+
+        #choosing random background color from ones sourced from the official website
+        colors = [
+                    '#FFDEF9',
+                    '#FFF8D2',
+                    '#E9F6CD',
+                    '#D7D7FF',
+                    '#F2EEE4',
+                    '#FFD7D7',
+                    '#C0E1FF',
+                    '#CCF6D3',
+                    '#FFEDC0',
+                    '#FFEEED'
+                    ]
+                    
+        bg_color = np.random.choice(colors)
+
+        background = Image.new('RGBA', image_size, color=bg_color)
+
+
         resized = image.resize(image_size, resample=Image.LANCZOS)
         rotated = resized.rotate(angle=rotation, resample=Image.BICUBIC)
         composite = Image.alpha_composite(background, rotated)
