@@ -62,4 +62,17 @@ ln -s /floyd/input/cryptokitties /floyd/home/data
 #115
 #python main.py --dataset=cryptokitties --d_lr=0.00006 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --gamma=0.9 --use_gpu=True
 #116
-python main.py --dataset=cryptokitties --d_lr=0.00001 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=10000 --gamma=0.9 --use_gpu=True 
+#python main.py --dataset=cryptokitties --d_lr=0.00001 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=10000 --gamma=0.9 --use_gpu=True
+#117 - new dataset!
+#python main.py --dataset=cryptokitties --max_step=50000 --use_gpu=True
+#118 - better but still some mode collapse in terms of bg color and style of cat.
+#python main.py --dataset=cryptokitties --d_lr=0.00004 --g_lr=0.00008 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True --gamma=0.9
+#119
+#python main.py --dataset=cryptokitties --d_lr=0.000015 --g_lr=0.00006 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True --gamma=0.7
+#120 - total collapse! Interesting, since standard LR worked well in 117
+#python main.py --dataset=cryptokitties --d_lr=0.00004 --g_lr=0.00004 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True
+#121
+#python main.py --dataset=cryptokitties --d_lr=0.00004 --g_lr=0.00006 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True
+#122
+#python main.py --dataset=cryptokitties --d_lr=0.00005 --g_lr=0.00015 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True
+python main.py --dataset=cryptokitties --d_lr=0.00012 --g_lr=0.00012 --lr_lower_boundary=0.00001 --z_num=256 --max_step=50000 --use_gpu=True

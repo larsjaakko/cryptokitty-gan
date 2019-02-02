@@ -359,5 +359,5 @@ class Trainer(object):
         x = self.data_loader.eval(session=self.sess)
         if self.data_format == 'NCHW':
             x = x.transpose([0, 2, 3, 1])
-        print(len(np.where( x < 255 )))
+        #print(len(np.where( x < 255 )))
         return x

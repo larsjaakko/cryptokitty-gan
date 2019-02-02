@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 import os
 import time
 
+from tqdm import tqdm
 
 
 def get_url(id, format=None):
@@ -26,11 +27,15 @@ def get_url(id, format=None):
     blob = r.json()
     img_url = blob.get('image_url_cdn')
 
+    fancy = blob.get('is_fancy')
+    special_edition = blob.get('is_special_edition')
+    exclusive = blob.get('is_exclusive')
+
     path = urlparse(img_url).path
     ext = os.path.splitext(path)[1]
 
-    if ext == '.png':
-         tqdm.write('PNGPNG')
+    if fancy is True:
+         #tqdm.write('PNGPNG')
          raise ValueError('This is one of them special kitties. Try the next one')
 
     if format:
@@ -51,7 +56,7 @@ def fetch_file(url, id):
 
     r = requests.get(url, stream=True)
 
-    with open(str(path), 'wb') as out_file:
+    with open(str(path), mode='wb') as out_file:
         shutil.copyfileobj(r.raw, out_file)
 
     return path

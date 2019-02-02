@@ -14,10 +14,10 @@ import numpy as np
 
 
 raw_folder = Path.cwd() / 'data/raw'
-out_folder = Path.cwd() / 'data/processed_png'
+out_folder = Path.cwd() / 'data/processed_256'
 
-dataset_size = 150000
-image_size = (128, 128)
+dataset_size = 55000
+image_size = (256, 256)
 
 def get_download_list():
 
@@ -63,6 +63,7 @@ def worker(file_id):
         pass
     except Exception as e:
         #tqdm.write(e.__doc__)
+        #print(e)
         #tqdm.write(e.message)
         pass
 
@@ -97,7 +98,7 @@ def convert(filestr):
         left = right - (1456 + pixels)
         upper = 181 - np.random.choice(np.arange(np.min([pixels, 182])))
         lower = upper + (1456 + pixels)
-        rotation = np.random.normal(loc=0, scale=3.5)
+        rotation = np.random.normal(loc=0, scale=3)
 
         image = image.crop((left, upper, right, lower))
 
@@ -115,7 +116,8 @@ def convert(filestr):
                     '#FFEEED'
                     ]
 
-        bg_color = np.random.choice(colors)
+        #bg_color = np.random.choice(colors)
+        bg_color = 'white'
 
         background = Image.new('RGBA', image_size, color=bg_color)
 
@@ -134,7 +136,7 @@ def convert(filestr):
         return 1
 
     except Exception as e:
-        print(e)
+        tqdm.write(e)
         path.unlink()
         return 0
 
